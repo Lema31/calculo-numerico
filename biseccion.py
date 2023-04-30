@@ -3,7 +3,7 @@ import math
 
 def biseccion(fx, interval, min_error, max_iterations):
     relative_error = 100
-    actual_iteration = 1
+    actual_iteration = 0
     actual_m = 0
     previous_m = 0
 
@@ -18,7 +18,7 @@ def biseccion(fx, interval, min_error, max_iterations):
         else:
             interval[1] = actual_m
 
-        if(actual_iteration > 1):
+        if(actual_iteration >= 1):
             relative_error = abs((actual_m - previous_m)/actual_m)
 
         actual_iteration+= 1
