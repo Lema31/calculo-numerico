@@ -22,19 +22,19 @@ def biseccion(fx, interval, min_error, max_iterations):
             relative_error = abs((actual_m - previous_m)/actual_m)
 
         actual_iteration+= 1
-    print("Numero de iteraciones:" + str(actual_iteration))
-    print("Error relativo: " + str(relative_error))
-    print("Valor mas aproximado a P: " + str(actual_m))
+    #print("Numero de iteraciones:" + str(actual_iteration))
+    #print("Error relativo: " + str(relative_error))
+    #print("Valor mas aproximado a P: " + str(actual_m))
     return actual_m
 
 
 
 # Data.
 
-fx = lambda x: (x - 2)**2 - math.log(x)
-interval = [1, 2]
+fx = lambda x: x**3 - x + 1
+interval = [0,1]
 error = 0.02
 max_iterations = 50
 
-biseccion(fx, interval, error, max_iterations)
+#print(biseccion(fx, interval, error, max_iterations))
 

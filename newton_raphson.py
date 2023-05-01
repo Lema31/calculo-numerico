@@ -1,6 +1,8 @@
 import sympy as sp
+import math
 
 def newton_raphson(fx, start, min_error, max_iterations):
+    message = "El algoritmo no converge en la funcion dada"
     relative_error = 100
     previous_error = 0
     actual_iteration = 0
@@ -11,30 +13,39 @@ def newton_raphson(fx, start, min_error, max_iterations):
 
     while((actual_iteration < max_iterations) and (relative_error > min_error)):
         previous_m = actual_m
-        actual_m = actual_m - ((fx(actual_m))/(fx_derivative.evalf(subs={x: actual_m})))
+        try:
+            actual_m = actual_m - ((fx(actual_m))/(fx_derivative.evalf(subs={x: actual_m})))
+        except ZeroDivisionError:
+            return "No se puede hacer una division entre 0"
 
         if(actual_iteration >= 1):
             previous_error = relative_error
             relative_error = abs((actual_m - previous_m) / actual_m)
+            if(math.isnan(relative_error)):
+                return message
+
             if(actual_iteration >= 2):
-                if (relative_error > (3 * previous_error)):
-                    return "El algoritmo no converge en la funcion dada"
+                if (relative_error > (2 * previous_error)):
+                    return message
 
         actual_iteration+= 1
-    print("Numero de iteraciones:" + str(actual_iteration))
-    print("Error relativo: " + str(relative_error))
-    print("Valor mas aproximado a P: " + str(actual_m))
+    #print("Numero de iteraciones:" + str(actual_iteration))
+    #print("Error relativo: " + str(relative_error))
+    #print("Valor mas aproximado a P: " + str(actual_m))
     return actual_m
 
 
 #Data
 x = sp.Symbol('x')
 max_iterations = 50
-fx = lambda x: x**3 - x + 1
+fx = lambda x: x**2 - 2*x + 1
 start_point = 0.5
-error = 0.000006
+error = 0
 
-print(newton_raphson(fx, start_point, error, max_iterations))
+#print(newton_raphson(fx, start_point, error, max_iterations))
+
+
+
 
 
 
