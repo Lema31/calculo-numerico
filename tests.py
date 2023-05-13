@@ -6,6 +6,7 @@ from newton_raphson import newton_raphson
 
 max_iterations = 100
 
+
 #tests for the biseccion function
 class TestBiseccion(unittest.TestCase):
     def test_potencia(self):
