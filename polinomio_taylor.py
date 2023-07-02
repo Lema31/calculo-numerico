@@ -50,14 +50,17 @@ def taylor_polynomial_integrating(fx, degree, interval):
         if(actual_iteration == 0):
             result += sp.integrate(function.evalf(subs = {x : test_value}),(x,interval[0],interval[1])).evalf()
         if(actual_iteration == 1):
-            func = function.evalf(subs = {x : test_value}) * (x - 1)
-            result += (sp.integrate(func, (x,interval[0],interval[1])).evalf())
+            func = function.evalf(subs = {x : test_value}) * (x - test_value)
+            result += sp.integrate(func, (x,interval[0],interval[1])).evalf()
         if(actual_iteration >= 2):
-            func = (function.evalf(subs={x: test_value})) * ((x - 1) ** actual_iteration) / sp.factorial(actual_iteration)
+            func = (function.evalf(subs={x: test_value})) * ((x - test_value) ** actual_iteration) / sp.factorial(actual_iteration)
             result += sp.integrate(func, (x,interval[0],interval[1])).evalf()
 
         actual_iteration += 1
-    relative_error = abs((real_value - result) / real_value)
+    if(result != real_value):
+        relative_error = abs((real_value - result) / real_value)
+    else:
+        relative_error = 0
 
     return result, relative_error
 
@@ -73,9 +76,10 @@ if __name__ == "__main__":
     print("valor aproximado: " + str(result))
     print("Error relativo: " + str(relative_error))
 
-    fx = lambda x: x * sp.cos(x**2)
-    degree = 2
-    interval = [0,2]
+    #fx = lambda x: x * sp.cos(x**2)
+    fx = lambda x: sp.exp(x)
+    degree = 5
+    interval = [0, 1]
     result, relative_error = taylor_polynomial_integrating(fx, degree, interval)
     print("valor aproximado: " + str(result))
     print("Error relativo: " + str(relative_error))

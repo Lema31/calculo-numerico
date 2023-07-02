@@ -35,9 +35,9 @@ def biseccion(fx, interval, min_error, max_iterations):
 # Data.
 
 if __name__ == "__main__":
-    fx = lambda x: x**3 - x + 1
+    fx = lambda x: math.e ** x - 3 * x ** 2
     interval = [0,1]
-    error = 0.02
+    error = 0.03
     max_iterations = 50
 
     print(biseccion(fx, interval, error, max_iterations))
