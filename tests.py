@@ -1,6 +1,8 @@
 import unittest
 import math
 import sympy as sp
+from integracion_numerica import sum_riemann
+from integracion_numerica import trapezoid_method
 from biseccion import biseccion
 from newton_raphson import newton_raphson
 from polinomio_taylor import taylor_polynomial_integrating, taylor_polynomial
@@ -140,6 +142,28 @@ class TestNewtonRaphson(unittest.TestCase):
 #         self.assertAlmostEqual(result_2, expected_result_2, places=3)
 #         self.assertAlmostEqual(error_1, expected_error_1, places=3)
 #         self.assertAlmostEqual(error_2, expected_error_2, places=3)
+
+class TestSumRiemannAndTrapezoidMethod(unittest.TestCase):
+    def test_1(self):
+        f = lambda x: x**2
+        self.assertAlmostEqual(sum_riemann(f, [0, 1], 10000), 0.333333, places=3)
+        self.assertAlmostEqual(trapezoid_method(f, [0, 1], 10000), 0.333333, places=5)
+
+    def test_2(self):
+        f = lambda x: x**3
+        self.assertAlmostEqual(sum_riemann(f, [0, 1], 10000), 0.25, places=3)
+        self.assertAlmostEqual(trapezoid_method(f, [0, 1], 10000), 0.25, places=5)
+
+    def _test_exponential(self):
+        f = lambda x: math.exp(x)
+        self.assertAlmostEqual(sum_riemann(f, [0, 1], 10000), 1.71828, places=3)
+        self.assertAlmostEqual(trapezoid_method(f, [0, 1], 10000), 1.71828, places=5)
+
+    def test_trigonometric(self):
+        f = lambda x: math.cos(x ** 2)
+        self.assertAlmostEqual(sum_riemann(f, [0,1], 10000), 0.90452, places = 3)
+        self.assertAlmostEqual(trapezoid_method(f, [0, 1], 10000), 0.90452, places=5)
+
 
 if __name__ == "__main__":
     unittest.main()
