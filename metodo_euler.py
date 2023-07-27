@@ -6,7 +6,7 @@ def euler_method(f, interval, n, yi):
     actual_y = yi
 
     for i in range(n + 1):
-        result[i] = actual_y + h * f(actual_y, interval[0] + (h * i))
+        result[i] = round(actual_y + h * f(actual_y, interval[0] + (h * i)), 4)
         actual_y = result[i]
 
     return result

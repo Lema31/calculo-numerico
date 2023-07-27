@@ -5,6 +5,7 @@ from integracion_numerica import sum_riemann
 from integracion_numerica import trapezoid_method
 from biseccion import biseccion
 from newton_raphson import newton_raphson
+from metodo_euler import euler_method
 from polinomio_taylor import taylor_polynomial_integrating, taylor_polynomial
 
 max_iterations = 100
@@ -16,17 +17,17 @@ class TestBiseccion(unittest.TestCase):
         f = lambda x: x**3 - 2 * x - 5
         interval = [2, 3]
         tol = 0.0009
-        resultado_esperado = 2.0947265625
-        resultado_obtenido = biseccion(f, interval, tol, max_iterations)
-        self.assertAlmostEqual(resultado_esperado, resultado_obtenido, places=7)
+        expected_result = 2.0947265625
+        result = biseccion(f, interval, tol, max_iterations)
+        self.assertAlmostEqual(expected_result, result, places=7)
 
     def test_sin_x(self):
         f = lambda x: math.sin(x) - math.e**-x
         interval = [0, 1]
         tol = 0.053
-        resultado_esperado = 0.59375
-        resultado_obtenido = biseccion(f, interval, tol, max_iterations)
-        self.assertAlmostEqual(resultado_esperado, resultado_obtenido, places=5)
+        expected_result = 0.59375
+        result = biseccion(f, interval, tol, max_iterations)
+        self.assertAlmostEqual(expected_result, result, places=5)
 
     def test_funcion_no_cumple_bolzano(self):
         f = lambda x: x**2 + 1
@@ -163,6 +164,15 @@ class TestSumRiemannAndTrapezoidMethod(unittest.TestCase):
         f = lambda x: math.cos(x ** 2)
         self.assertAlmostEqual(sum_riemann(f, [0,1], 10000), 0.90452, places = 3)
         self.assertAlmostEqual(trapezoid_method(f, [0, 1], 10000), 0.90452, places=5)
+
+class TestEuler(unittest.TestCase):
+    def test1(self):
+        f = lambda y, t: (t - y) ** 2 + 1
+        interval = [2, 3]
+        y1 = 1
+        n = 4
+        expected_result = {0 : 1.5, 1 : 1.8906, 2 : 2.2334, 3 : 2.5501, 4 : 2.8507}
+        self.assertAlmostEqual(expected_result, euler_method(f, interval, n , y1))
 
 
 if __name__ == "__main__":
